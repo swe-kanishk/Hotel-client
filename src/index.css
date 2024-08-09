@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
+
+.card-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: all 500ms ease-in-out;
+}
+
+.card-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  aspect-ratio: 4/4;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: none;
+  width: 1.8rem; /* Set this to your desired size */
+  height: 1.8rem; /* Same value as width to make it round */
+  border-radius: 50%; /* Fully rounded corners */
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+
+.card-container button:hover {
+  background: lightgray;
+}
+
+.card-wrapper {
+  position: relative;
+}
+
+.card-container:hover .slider-button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slider-button {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.dot {
+  height: 6px;
+  width: 6px;
+  margin: 0 2px;
+  background-color: #8b8a8a;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+  cursor: pointer;
+}
+
+.active-dot {
+  background-color: #ffffff;
+}
+
+.inactive-dot {
+  background-color: #afafaf;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
+}
+
+.rdrDateDisplay {
+  display: none;
+}
+
+.rdrDayNumber {
+  font-weight: 500 !important;
+  color: rgb(6, 6, 6);
+  height: 2rem;
+  width: 2rem;
+  font-size: 14px;
+}
+
+.rdrInRange, .rdrEndRange, .rdrStartRange, .rdrStartEdge, .rdrEndEdge {
+  background-color: palegreen;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: -2px;
+}
+
+.rdrStartEdge {
+  border-radius: 8px 0px 0px 8px;
+}
+.rdrEndEdge {
+  border-radius: 0px 8px 8px 0px;
+}
+.rdrDay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px 0px 2px 0px;
+}
+.rdrMonthAndYearPickers {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 16px;
+}
+.rdrMonthAndYearWrapper {
+  border-bottom: 1px solid gray;
+  padding-bottom: 0.4rem;
+}
+
+.rdrMonthPicker select {
+  padding-right: 6px;
+  padding: 10px 6px 10px 2px;
+}
+.rdrYearPicker select {
+  padding-right: 30px;
+}
+.rdrMonth {
+  padding-top: 0.5rem;
+  min-width: 100%;
+}
+
+.rdrCalendarWrapper {
+  min-width: 100%;
+}
+.rdrDayNumber {
+  justify-self: center;
+  align-self: center;
+}
+.rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
+ border: none;
+}
+
+.rdrDayNumber {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute !important;
+  left: 0.5rem;
+}
+
+.rdrDay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.rdrWeekDay {
+  color: blue;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* Style the range input track */
+input[type="range"] {
+  -webkit-appearance: none; /* Override default styles */
+  width: 100%; /* Full-width */
+  height: 3px; /* Thin track */
+  border-radius: 1rem;
+  background: #c6c6c6; /* Black track */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Slightly transparent */
+  transition: opacity 0.2s; /* Smooth transition for interaction */
+}
+
+input[type="range"]:hover {
+  opacity: 1; /* Fully opaque on hover */
+}
+
+/* Style the range input thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default styles */
+  appearance: none; /* Override default styles */
+  width: 12px; /* Circle size */
+  height: 12px; /* Circle size */
+  border-radius: 50%; /* Round circle */
+  background: rgb(9, 9, 9); /* Red circle */
+  cursor: pointer; /* Pointer cursor */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px; /* Circle size */
+  height: 16px; /* Circle size */
+  border-radius: 50%; /* Round circle */
+  background: red; /* Red circle */
+  cursor: pointer; /* Pointer cursor */
+}
+
+/* Firefox track */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 4px; /* Thin track */
+  background: c6c6c6; /* Black track */
+}
+
+/* For IE */
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 4px;
+  background: transparent; /* Transparent for IE */
+  border-color: transparent;
+  border-width: 6px 0;
+  color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: #c6c6c6; /* Black track */
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: c6c6c6; /* Black track */
+}
+
+input[type="range"]::-ms-thumb {
+  width: 16px; /* Circle size */
+  height: 16px; /* Circle size */
+  border-radius: 50%; /* Round circle */
+  background: red; /* Red circle */
+  cursor: pointer; /* Pointer cursor */
+}
