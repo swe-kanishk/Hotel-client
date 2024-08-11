@@ -168,7 +168,7 @@ export default function Categories({ activeCategory, setActiveCategory }) {
         {categories.map((item) => (
           <NavLink
             key={item.label}
-            to={`/api/listings/categories/${item.label.toLowerCase()}`}
+            to={`/api/listings/categories/:${item.label.toLowerCase()}`}
             className={({ isActive }) =>
               isActive ? "text-black border-b-2 border-black" : "text-gray-600"
             }
