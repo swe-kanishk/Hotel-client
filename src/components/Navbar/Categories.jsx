@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -148,15 +149,9 @@ export const categories = [
       "Floating accommodations offering a unique stay experience on water, with scenic views and a tranquil environment.",
   },
 ];
-  
+
 export default function Categories({ activeCategory, setActiveCategory }) {
   const containerRef = useRef(null);
-
-  const handleCategoryClick = async (category) => {
-    console.log(category)
-    setActiveCategory(category);
-  };
-
   const [checked, setChecked] = useState(false);
 
   const toggleSwitch = () => {
@@ -164,24 +159,31 @@ export default function Categories({ activeCategory, setActiveCategory }) {
   };
 
   return (
-    // <div className="flex items-center justify-between  w-full  pb-1 pt-[85px] ">
-      <div className="relative flex items-center w-full justify-start pt-[85px] pb-1 gap-10 flex-1 px-8 shadow-gray-200 shadow-md overflow-hidden">
-        <div
-          ref={containerRef}
-          className="pt-3 pb-1 transition-all duration-1000 flex flex-row items-center px-4 justify-start gap-10 overflow-x-scroll"
-          style={{ transition: "transform 0.3s ease" }}
-        >
-          {categories.map((item) => (
+    <div className="relative flex items-center w-full justify-start pt-[85px] pb-1 gap-10 flex-1 px-8 shadow-gray-200 shadow-md overflow-hidden">
+      <div
+        ref={containerRef}
+        className="pt-3 pb-1 transition-all duration-1000 flex flex-row items-center px-4 justify-start gap-10 overflow-x-scroll"
+        style={{ transition: "transform 0.3s ease" }}
+      >
+        {categories.map((item) => (
+          <NavLink
+            key={item.label}
+            to={`/api/listings/categories/${item.label.toLowerCase()}`}
+            className={({ isActive }) =>
+              isActive ? "text-black border-b-2 border-black" : "text-gray-600"
+            }
+            onClick={() => setActiveCategory(item.label)}
+          >
             <CategoryBox
-              key={item.label}
               label={item.label}
               description={item.description}
               icon={item.icon}
-              onClick={() => handleCategoryClick(item.label)}
               selected={activeCategory === item.label}
             />
-          ))}
+          </NavLink>
+        ))}
       </div>
+
       <div className="flex gap-4 items-center min-w-fit">
         <div className="border-[1px] rounded-xl font-medium hover:border-black border-gray-200 text-sm p-3 flex items-center gap-2">
           <BiSliderAlt size={18} />
@@ -190,7 +192,10 @@ export default function Categories({ activeCategory, setActiveCategory }) {
         <div className="border-[1px] rounded-xl min-w-fit text-sm font-medium hover:border-black border-gray-200 text-md p-3 flex items-center gap-2">
           Display total before taxes
           <div className="flex items-center justify-center space-x-2">
-            <label htmlFor="toggle" className="flex items-center cursor-pointer">
+            <label
+              htmlFor="toggle"
+              className="flex items-center cursor-pointer"
+            >
               <div className="relative">
                 <input
                   id="toggle"
@@ -218,7 +223,5 @@ export default function Categories({ activeCategory, setActiveCategory }) {
         </div>
       </div>
     </div>
-    // </div>
   );
-  
 }
