@@ -39,7 +39,7 @@ export default function UserMenu() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/logout`);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/logout`);
       logout()
       toast.success('Logged out successfully');
       console.log(response); // Optionally handle response data
