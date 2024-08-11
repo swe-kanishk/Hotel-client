@@ -14,15 +14,14 @@ const STEPS = {
 
 const Map = lazy(() => import("../Map"));
 
-export default function SearchModal() {
+export default function SearchModal({ isOpen, onClose, getFromChild }) {
   const searchModal = useSearchModal();
 
-  const [location, setLocation] = useState(null);
+  const [location, setLocationState] = useState('');
   const [step, setStep] = useState(STEPS.LOCATION);
   const [guestCount, setGuestCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
-
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
 
@@ -36,18 +35,16 @@ export default function SearchModal() {
 
   const onSubmit = useCallback(async () => {
     if (step === STEPS.DATE) {
-      // Add your submit logic here
-      console.log("Submit search with data:", {
-        location,
-        guestCount,
-        roomCount,
-        bathroomCount,
-        checkIn, checkOut,
-      });
+        if (typeof getFromChild === 'function') {
+            getFromChild(location, guestCount);
+        } else {
+            console.error("getFromChild is not a function or is undefined", getFromChild);
+        }
+        searchModal.close();
     } else {
-      onNext();
+        onNext();
     }
-  }, [step, location, guestCount, roomCount, bathroomCount, checkIn, checkOut, onNext]);
+}, [step, location, guestCount, getFromChild, searchModal]);
 
   const actionLabel = step === STEPS.DATE ? "Search" : "Next";
   const secondaryActionLabel = step === STEPS.LOCATION ? undefined : "Back";
@@ -57,7 +54,7 @@ export default function SearchModal() {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading title="Where do you want to go?" subtitle="Select a location" />
-        <CountrySelect value={location} onChange={setLocation} />
+        <CountrySelect value={location} onChange={setLocationState} />
         <Suspense fallback={<div>Loading map...</div>}>
           <Map center={location?.latlng} />
         </Suspense>
@@ -81,7 +78,7 @@ export default function SearchModal() {
       <div className="flex flex-col gap-8">
         <Heading title="When do you plan to go?" subtitle="Make sure everyone is free!" />
         <div className="max-w-min border-1 border-black rounded-xl overflow-hidden min-w-full bg-red-500 border">
-          <DateRangePicker setCheckIn={setCheckIn}  setCheckOut={setCheckOut}       />
+          <DateRangePicker setCheckIn={setCheckIn} setCheckOut={setCheckOut} />
         </div>
       </div>
     );
@@ -89,11 +86,11 @@ export default function SearchModal() {
 
   return (
     <Modal
-      isOpen={searchModal.isOpen}
-      onClose={searchModal.close}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={onSubmit}
       actionLabel={actionLabel}
-      secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
+      secondaryAction={secondaryActionLabel ? onBack : undefined}
       secondaryActionLabel={secondaryActionLabel}
       title="Filters"
       body={bodyContent}
