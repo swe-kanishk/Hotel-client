@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -152,6 +151,12 @@ export const categories = [
 
 export default function Categories({ activeCategory, setActiveCategory }) {
   const containerRef = useRef(null);
+
+  const handleCategoryClick = async (category) => {
+    console.log(category);
+    setActiveCategory(category);
+  };
+
   const [checked, setChecked] = useState(false);
 
   const toggleSwitch = () => {
@@ -166,24 +171,16 @@ export default function Categories({ activeCategory, setActiveCategory }) {
         style={{ transition: "transform 0.3s ease" }}
       >
         {categories.map((item) => (
-          <NavLink
+          <CategoryBox
             key={item.label}
-            to={`/api/listings/categories/:${item.label.toLowerCase()}`}
-            className={({ isActive }) =>
-              isActive ? "text-black border-b-2 border-black" : "text-gray-600"
-            }
-            onClick={() => setActiveCategory(item.label)}
-          >
-            <CategoryBox
-              label={item.label}
-              description={item.description}
-              icon={item.icon}
-              selected={activeCategory === item.label}
-            />
-          </NavLink>
+            label={item.label}
+            description={item.description}
+            icon={item.icon}
+            onClick={() => handleCategoryClick(item.label)}
+            selected={activeCategory === item.label}
+          />
         ))}
       </div>
-
       <div className="flex gap-4 items-center min-w-fit">
         <div className="border-[1px] rounded-xl font-medium hover:border-black border-gray-200 text-sm p-3 flex items-center gap-2">
           <BiSliderAlt size={18} />
